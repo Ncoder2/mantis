@@ -15,8 +15,8 @@ runs:
         echo "GITHUB_EVENT_NAME=${GITHUB_EVENT_NAME}"
         echo "GITHUB_HEAD_REF=${GITHUB_HEAD_REF}"
         echo "GITHUB_REF=${GITHUB_REF}"
-        echo "GITHUB_EVENT_PATH=${GITHUB_EVENT_PATH}"
-        cat "${GITHUB_EVENT_PATH}"
+        echo "GITHUB_BASE_REF=${github.event.base_ref}"
+  
         if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
           RELEASE_TYPE="${{ inputs.releaseType }}"
         elif [[ "${{ github.event_name }}" == "push" ]]; then
