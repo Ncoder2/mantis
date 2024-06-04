@@ -12,12 +12,10 @@ runs:
     - name: Determine release type
       shell: bash
       run: |
-        echo "GITHUB_EVENT_NAME=${GITHUB_EVENT_NAME}"
-        echo "GITHUB_HEAD_REF=${GITHUB_HEAD_REF}"
-        echo "GITHUB_REF=${GITHUB_REF}"
+        echo "$GITHUB_EVENT_PATH"
         if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
           RELEASE_TYPE="${{ inputs.releaseType }}"
-        elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
+        elif [[ "${{ github.event_name }}" == "push" ]]; then
           if [[ "${{ github.head_ref }}" == "main" ]]; then
             echo "Releases from the main branch are not supported."
             exit 1
