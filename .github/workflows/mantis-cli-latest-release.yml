@@ -31,9 +31,11 @@ jobs:
 
       - name: Determine Current Version
         run: |
+          poetry lock
           latest_version=$(poetry version --short)
           echo "LATEST_VERSION=$latest_version" >> $GITHUB_ENV
-          echo "$LATEST_VERSION"
+          echo "latest_version=$latest_version" # add this line
+          which poetry # add this line
 
       - name: Check if Git Tag Exists
         id: git-tag
