@@ -39,19 +39,19 @@ jobs:
       - name: Check if Git Tag Exists
         id: git-tag
         run: |
-          if git rev-parse "$latest_version" >/dev/null 2>&1; then
-            echo "Tag $latest_version already exists."
+          if git rev-parse ${{ env.LATEST_VERSION }} >/dev/null 2>&1; then
+            echo "Tag ${{ env.LATEST_VERSION }} already exists."
             echo "CREATE_TAG=false" >> $GITHUB_ENV
           else
-            echo "Tag $latest_version does not exist."
+            echo "Tag ${{ env.LATEST_VERSION }} does not exist."
             echo "CREATE_TAG=true" >> $GITHUB_ENV
           fi
 
       - name: Create Git Tag
-        if: env.CREATE_TAG == 'true'
+        if: ${{ env.CREATE_TAG == 'true' }}
         run: |
-          git tag -a "$LATEST_VERSION" -m "Release $LATEST_VERSION"
-          git push origin "$LATEST_VERSION"
+          git tag -a ${{ env.LATEST_VERSION }} -m "Release ${{ env.LATEST_VERSION }}"
+          git push origin ${{ env.LATEST_VERSION }}
 
       - name: Log in to the Container registry
         uses: docker/login-action@v2
