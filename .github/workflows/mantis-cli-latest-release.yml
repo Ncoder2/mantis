@@ -35,6 +35,11 @@ jobs:
           echo "LATEST_VERSION=$latest_version" >> $GITHUB_ENV
           echo "latest_version=$latest_version" # add this line
           which poetry # add this line
+      
+      - name: Debug git rev-parse
+        run: |
+          echo "Checking if tag ${{ env.LATEST_VERSION }} exists..."
+          git rev-parse ${{ env.LATEST_VERSION }} && echo "Tag exists" || echo "Tag does not exist"
 
       - name: Check if Git Tag Exists
         id: git-tag
