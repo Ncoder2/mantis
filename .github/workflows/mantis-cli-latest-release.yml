@@ -13,6 +13,10 @@ on:
           - 'major'
           - 'minor'
           - 'patch'
+      changelog:
+        description: 'Provide a changelog for this release'
+        required: true
+        type: string
 
 env:
   REGISTRY: ghcr.io

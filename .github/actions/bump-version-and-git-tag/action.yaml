@@ -15,22 +15,6 @@ runs:
         new_version=$(poetry version --short)
         echo "NEW_VERSION=$new_version" >> $GITHUB_ENV
 
-        # Gather the previous tag
-        previous_tag=$(git describe --tags --abbrev=0)
-        echo "Previous tag: $previous_tag"
-
-        # Gather commit messages from the previous tag to the current HEAD
-        commits=$(git log $previous_tag..HEAD --pretty=format:"%h %s" --no-merges)
-        echo "Commits: $commits"
-          
-        # Gather contributors from the previous tag to the current HEAD
-        contributors=$(git log $previous_tag..HEAD --pretty=format:"%an" | sort | uniq)
-        echo "Contributors: $contributors"
-
-        # Prepare tag message
-        tag_message="Release $new_version\n\nWhat's changed:\n$commits\n\nContributors:\n$contributors"
-        echo "Tag message: $tag_message"
-
         # Add commit messsage for message bump
         git add .
         git commit -m "Bump poetry version to $new_version"
@@ -41,6 +25,6 @@ runs:
         else
           # Commit and tag the new version
           echo "Tag $new_version does not exist."
-          git tag -a $new_version -m "$tag_message"
+          git tag -a $new_version -m "${{ inputs.changelog }}"
           git show "$new_version"
         fi
