@@ -43,7 +43,7 @@ jobs:
           else
             echo "Tag $latest_version does not exist."
             echo "CREATE_TAG=true" >> $GITHUB_ENV
-          fig
+          fi
 
       - name: Create Git Tag
         if: env.CREATE_TAG == 'true'
