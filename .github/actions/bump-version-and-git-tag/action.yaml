@@ -41,6 +41,6 @@ runs:
         else
           # Commit and tag the new version
           echo "Tag $new_version does not exist."
-          git tag -a $new_version -m "Release $new_version"
+          git tag -a $new_version -m "$tag_message"
           git show "$new_version"
         fi
