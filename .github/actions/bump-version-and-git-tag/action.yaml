@@ -21,12 +21,15 @@ runs:
 
         # Gather commit messages from the previous tag to the current HEAD
         commits=$(git log $previous_tag..HEAD --pretty=format:"%h %s" --no-merges)
+        echo "Commits: $commits"
           
         # Gather contributors from the previous tag to the current HEAD
         contributors=$(git log $previous_tag..HEAD --pretty=format:"%an" | sort | uniq)
+        echo "Contributors: $contributors"
 
         # Prepare tag message
         tag_message="Release $new_version\n\nWhat's changed:\n$commits\n\nContributors:\n$contributors"
+        echo "Tag message: $tag_message"
 
         # Add commit messsage for message bump
         git add .
