@@ -33,6 +33,7 @@ jobs:
         run: |
           latest_version=$(poetry version --short)
           echo "LATEST_VERSION=$latest_version" >> $GITHUB_ENV
+          echo "$LATEST_VERSION"
 
       - name: Check if Git Tag Exists
         id: git-tag
