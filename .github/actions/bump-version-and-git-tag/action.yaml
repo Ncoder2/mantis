@@ -25,6 +25,6 @@ runs:
         else
           # Commit and tag the new version
           echo "Tag $new_version does not exist."
-          git tag -a $new_version -m "${{ inputs.changelog }}"
+          git tag -a $new_version -m "$new_version"
           git show "$new_version"
         fi
