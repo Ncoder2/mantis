@@ -14,12 +14,13 @@ runs:
         poetry version "${{ inputs.releaseType }}"
         new_version=$(poetry version --short)
         echo "NEW_VERSION=$new_version" >> $GITHUB_ENV
-        echo "TAG_NAME=$new_version" >> $GITHUB_ENV
       
         # Check if the new version tag already exists
         if git rev-parse "$new_version" >/dev/null 2>&1; then
-        echo "Tag $new_version already exists. Exiting..."
+          echo "Tag $new_version already exists."
         else
           # Commit and tag the new version
+          echo "Tag $new_version does not exist."
           git tag -a $new_version -m "Release $new_version"
+          git show "$new_version"
         fi
