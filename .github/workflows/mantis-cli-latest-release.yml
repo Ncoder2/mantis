@@ -31,7 +31,6 @@ jobs:
 
       - name: Determine Current Version
         run: |
-          poetry lock
           latest_version=$(poetry version --short)
           echo "LATEST_VERSION=$latest_version" >> $GITHUB_ENV
           echo "latest_version=$latest_version" # add this line
