@@ -70,6 +70,6 @@ jobs:
           context: .
           push: true
           tags: |
-              ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.LATEST_VERSION }}
+              ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.NEW_VERSION }}
               ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           labels: ${{ steps.meta.outputs.labels }}
