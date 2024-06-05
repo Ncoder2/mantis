@@ -4,19 +4,10 @@ on:
     branches:
       - main
   workflow_dispatch:
-    inputs:
-        releaseType:
-          description: 'What kind of release is this?'
-          required: true
-          type: choice
-          options:
-            - 'major'
-            - 'minor'
-            - 'patch'
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ncoder2/ncoder2mantis
+  IMAGE_NAME: ncoder2/ncoder2mantis-upstream
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
@@ -26,33 +17,6 @@ jobs:
       actions: write
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Python and Git
-        uses: ./.github/actions/setup-python-and-git
-        with:
-          python-version: '3.9'
-
-      - name: Install Poetry
-        run: pip install poetry==1.4.2
-
-      - name: Determine release type
-        uses: ./.github/actions/determine-release-type
-        with:
-          releaseType: ${{ github.event.inputs.releaseType }}
-  
-      - name: Bump poetry version and add git tag
-        uses: ./.github/actions/bump-version-and-git-tag
-        with:
-          releaseType: ${{ env.RELEASE_TYPE }}
-      
-      - name: Push version bump commit
-        run: |
-          git push origin main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Log in to the Container registry
         uses: docker/login-action@v2
         with:
@@ -72,5 +36,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.NEW_VERSION }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           labels: ${{ steps.meta.outputs.labels }}

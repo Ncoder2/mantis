@@ -4,6 +4,15 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      releaseType:
+        description: 'What kind of release is this?'
+        required: true
+        type: choice
+        options:
+          - 'major'
+          - 'minor'
+          - 'patch'
 
 env:
   REGISTRY: ghcr.io
@@ -30,35 +39,17 @@ jobs:
 
       - name: Install Poetry
         run: pip install poetry==1.4.2
-
-      - name: Determine Current Version
-        run: |
-          latest_version=$(poetry version --short)
-          echo "LATEST_VERSION=$latest_version" >> $GITHUB_ENV
-          echo "latest_version=$latest_version" # add this line
-          which poetry # add this line
+  
+      - name: Bump poetry version and add git tag
+        uses: ./.github/actions/bump-version-and-git-tag
+        with:
+          releaseType: ${{ inputs.releaseType }}
       
-      - name: Debug git rev-parse
+      - name: Push version bump commit
         run: |
-          echo "Checking if tag ${{ env.LATEST_VERSION }} exists..."
-          git rev-parse ${{ env.LATEST_VERSION }} && echo "Tag exists" || echo "Tag does not exist"
-
-      - name: Check if Git Tag Exists
-        id: git-tag
-        run: |
-          if git rev-parse ${{ env.LATEST_VERSION }} >/dev/null 2>&1; then
-            echo "Tag ${{ env.LATEST_VERSION }} already exists."
-            echo "CREATE_TAG=false" >> $GITHUB_ENV
-          else
-            echo "Tag ${{ env.LATEST_VERSION }} does not exist."
-            echo "CREATE_TAG=true" >> $GITHUB_ENV
-          fi
-
-      - name: Create Git Tag
-        if: ${{ env.CREATE_TAG == 'true' }}
-        run: |
-          git tag -a ${{ env.LATEST_VERSION }} -m "Release ${{ env.LATEST_VERSION }}"
-          git push origin ${{ env.LATEST_VERSION }}
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Log in to the Container registry
         uses: docker/login-action@v2
