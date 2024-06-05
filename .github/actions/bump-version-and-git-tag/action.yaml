@@ -15,5 +15,11 @@ runs:
         new_version=$(poetry version --short)
         echo "NEW_VERSION=$new_version" >> $GITHUB_ENV
         echo "TAG_NAME=$new_version" >> $GITHUB_ENV
-        git commit -am "Bump poetry version to $new_version"
-        git tag $new_version
+      
+        # Check if the new version tag already exists
+        if git rev-parse "$new_version" >/dev/null 2>&1; then
+        echo "Tag $new_version already exists. Exiting..."
+        else
+          # Commit and tag the new version
+          git tag -a $new_version -m "Release $new_version"
+        fi
