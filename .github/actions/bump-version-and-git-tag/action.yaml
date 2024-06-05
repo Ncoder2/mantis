@@ -14,7 +14,9 @@ runs:
         poetry version "${{ inputs.releaseType }}"
         new_version=$(poetry version --short)
         echo "NEW_VERSION=$new_version" >> $GITHUB_ENV
-      
+        git add .
+        git commit -m "Bump poetry version to $new_version"
+              
         # Check if the new version tag already exists
         if git rev-parse "$new_version" >/dev/null 2>&1; then
           echo "Tag $new_version already exists."
