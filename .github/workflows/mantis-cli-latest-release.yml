@@ -39,10 +39,11 @@ jobs:
         run: |
           if git rev-parse "$latest_version" >/dev/null 2>&1; then
             echo "Tag $latest_version already exists."
+            echo "CREATE_TAG=true" >> $GITHUB_ENV
           else
             echo "Tag $latest_version does not exist."
             echo "CREATE_TAG=true" >> $GITHUB_ENV
-          fi
+          fig
 
       - name: Create Git Tag
         if: env.CREATE_TAG == 'true'
