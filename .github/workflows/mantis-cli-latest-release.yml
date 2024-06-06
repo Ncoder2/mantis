@@ -1,8 +1,5 @@
 name: Mantis CLI Latest Release
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
     inputs:
       releaseType:
