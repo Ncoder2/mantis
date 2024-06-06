@@ -1,9 +1,9 @@
 [tool.poetry]
 name = "mantis"
-version = "4.0.0"
+version = "3.0.0"
 description = "Mantis is a security framework that automates the workflow of discovery, reconnaissance, and vulnerability scanning."
 license = "apache2"
-authors=["PK7 <pk@gmail.com>"]
+authors=["PK9 <pk@gmail.com>"]
 repository = "https://github.com/PhonePe/mantis"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
