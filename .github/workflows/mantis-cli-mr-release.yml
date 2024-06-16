@@ -1,4 +1,4 @@
-name: Mantis CLI MR/PR Release
+name: Mantis Dashboard MR/PR Release
 on:
   pull_request:
     branches:
