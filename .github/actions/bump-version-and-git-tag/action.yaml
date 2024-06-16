@@ -15,6 +15,7 @@ runs:
         latest_image_version=$(poetry version --short)
         echo "LATEST_IMAGE_VERSION=$latest_image_version" >> $GITHUB_ENV
         cli_tag_version="cli-${latest_image_version}"
+        echo "CLI_TAG_VERSION=$cli_tag_version" >> $GITHUB_ENV
 
         # Add commit messsage for message bump
         git add .
