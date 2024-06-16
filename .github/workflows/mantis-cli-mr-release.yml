@@ -2,14 +2,14 @@ name: Mantis CLI MR/PR Release
 on:
   pull_request:
     branches:
-      - main
+      - dashboard
     types:
       - closed
   workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ncoder2/ncoder2mantis-upstream
+  IMAGE_NAME: ncoder2/ncoder2mantis-dashboard-upstream
 jobs:
   build-and-push-image:
     if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true

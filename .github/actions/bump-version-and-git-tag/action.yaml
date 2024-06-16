@@ -14,19 +14,19 @@ runs:
         poetry version "${{ inputs.releaseType }}"
         latest_image_version=$(poetry version --short)
         echo "LATEST_IMAGE_VERSION=$latest_image_version" >> $GITHUB_ENV
-        cli_tag_version="cli-${latest_image_version}"
-        echo "CLI_TAG_VERSION=$cli_tag_version" >> $GITHUB_ENV
+        dashboard_tag_version="dashboard-${latest_image_version}"
+        echo "DASHBOARD_TAG_VERSION=$dashboard_tag_version" >> $GITHUB_ENV
 
         # Add commit messsage for message bump
         git add .
         git commit -m "Bump poetry version to $latest_image_version"
 
         # Check if the new version tag already exists
-        if git rev-parse "$cli_tag_version" >/dev/null 2>&1; then
-          echo "Tag $cli_tag_version already exists."
+        if git rev-parse "$dashboard_tag_version" >/dev/null 2>&1; then
+          echo "Tag $dashboard_tag_version already exists."
         else
           # Commit and tag the new version
-          echo "Tag $cli_tag_version does not exist."
-          git tag -a $cli_tag_version -m "$cli_tag_version"
-          git show "$cli_tag_version"
+          echo "Tag $dashboard_tag_version does not exist."
+          git tag -a $dashboard_tag_version -m "$dashboard_tag_version"
+          git show "$dashboard_tag_version"
         fi
